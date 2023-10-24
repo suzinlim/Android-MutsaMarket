@@ -1,13 +1,13 @@
-package hansung.ac.mutsamarket.ui.dashboard
+package hansung.ac.mutsamarket.ui.make_content
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class MakeContentViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is Make Content Fragment"
     }
     val text: LiveData<String> = _text
 }

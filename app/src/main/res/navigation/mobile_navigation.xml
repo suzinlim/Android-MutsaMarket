@@ -12,14 +12,19 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="hansung.ac.mutsamarket.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_chatting"
+        android:name="hansung.ac.mutsamarket.ui.chatting.ChattingFragment"
+        android:label="@string/title_chatting"
+        tools:layout="@layout/fragment_chatting" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="hansung.ac.mutsamarket.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_make_content"
+        android:name="hansung.ac.mutsamarket.ui.make_content.MakeContentFragment"
+        android:label="@string/title_make_content"
+        tools:layout="@layout/fragment_make_content" />
+    <fragment
+        android:id="@+id/navigation_my_page"
+        android:name="hansung.ac.mutsamarket.ui.my_page.MyPageFragment"
+        android:label="@string/title_my_page"
+        tools:layout="@layout/fragment_my_page" />
 </navigation>
