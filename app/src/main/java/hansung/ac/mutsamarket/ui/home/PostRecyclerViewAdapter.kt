@@ -10,6 +10,13 @@ import hansung.ac.mutsamarket.vo.Post
 class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.PostViewHolder>() {
 
     var dataList = mutableListOf<Post>()
+    interface OnItemClickListener {
+        fun onItemClick(post: Post)
+    }
+    private var itemClickListener: OnItemClickListener? = null
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
+    }
 
     inner class PostViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root){
        fun bind(post: Post){
@@ -18,8 +25,13 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
            binding.itemPostPrice.text = post.price.toString()
            binding.itemPostIsSale.text = post.isSale
            binding.itemPostWriter.text = post.title
+
+           binding.root.setOnClickListener {
+               itemClickListener?.onItemClick(post)
+           }
        }
     }
+
     //만들어진 뷰홀더 없을때 뷰홀더(레이아웃) 생성하는 함수
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding=ItemPostBinding.inflate(LayoutInflater.from(parent.context),parent,false)

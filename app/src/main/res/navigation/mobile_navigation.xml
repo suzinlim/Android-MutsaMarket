@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="hansung.ac.mutsamarket.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/postDetailDestination"
+            app:destination="@+id/navigation_post_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_chatting"
@@ -27,4 +31,11 @@
         android:name="hansung.ac.mutsamarket.ui.my_page.MyPageFragment"
         android:label="@string/title_my_page"
         tools:layout="@layout/fragment_my_page" />
+
+    <fragment
+        android:id="@+id/navigation_post_detail"
+        android:name="hansung.ac.mutsamarket.ui.home.PostDetailFragment"
+        android:label="게시물 상세"
+        tools:layout="@layout/fragment_post_detail"/>
+
 </navigation>
