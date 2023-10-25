@@ -23,7 +23,7 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
 //           binding.itemPostImage = post.image
            binding.itemPostTitle.text = post.title
            binding.itemPostPrice.text = post.price.toString()
-           binding.itemPostIsSale.text = post.isSale
+           binding.itemPostIsSale.text = post.isSale.toString()
            binding.itemPostWriter.text = post.title
 
            binding.root.setOnClickListener {

@@ -36,6 +36,10 @@
         android:id="@+id/navigation_post_detail"
         android:name="hansung.ac.mutsamarket.ui.home.PostDetailFragment"
         android:label="게시물 상세"
-        tools:layout="@layout/fragment_post_detail"/>
+        tools:layout="@layout/fragment_post_detail">
+        <action
+            android:id="@+id/action_navigation_post_detail_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>

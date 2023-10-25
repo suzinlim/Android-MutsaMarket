@@ -4,4 +4,11 @@
     <string name="title_chatting">채팅</string>
     <string name="title_make_content">글 쓰기</string>
     <string name="title_my_page">마이 페이지</string>
+    <string name="post_detail_back">뒤로</string>
+    <string name="post_detail_writer_text">판매자 이름</string>
+    <string name="post_detail_isSale_text">판매 여부</string>
+    <string name="post_detail_title_text">게시글 이름</string>
+    <string name="post_detail_price_text">20,000</string>
+    <string name="post_detail_content_text">이것은 상품 설명입니다.\n안녕하세요? 반갑습니다!</string>
+
 </resources>

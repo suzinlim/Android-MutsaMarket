@@ -58,16 +58,16 @@ class HomeFragment : Fragment() {
 
     fun initList(){ //임의로 데이터 넣어서 만들어봄
         with(postList){
-            add(Post("","title1",10000,"me", "판매중"))
-            add(Post("","title2",20000,"me", "판매 완료"))
-            add(Post("","title3",30000,"me", "판매중"))
-            add(Post("","title4",40000,"me", "판매 완료"))
-            add(Post("","title5",50000,"me", "판매중"))
-            add(Post("","title6",60000,"me", "판매 완료"))
-            add(Post("","title7",70000,"me", "판매중"))
-            add(Post("","title8",80000,"me", "판매 완료"))
-            add(Post("","title9",90000,"me", "판매중"))
-            add(Post("","title10",100000,"me", "판매 완료"))
+            add(Post("","title1","10,000","me", true))
+            add(Post("","title2","20,000","me", false))
+            add(Post("","title3","30,000","me", true))
+            add(Post("","title4","40,000","me", false))
+            add(Post("","title5","50,000","me", true))
+            add(Post("","title6","60,000","me", false))
+            add(Post("","title7","70,000","me", true))
+            add(Post("","title8","80,000","me", false))
+            add(Post("","title9","90,000","me", true))
+            add(Post("","title10","100,000","me", false))
         }
     }
 
