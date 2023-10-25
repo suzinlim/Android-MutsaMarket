@@ -28,10 +28,10 @@ class MakeContentFragment : Fragment() {
         _binding = FragmentMakeContentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMakeContent
-        makeContentViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        //val textView: TextView = binding.textMakeContent
+        //makeContentViewModel.text.observe(viewLifecycleOwner) {
+            //textView.text = it
+        //}
         return root
     }
 
