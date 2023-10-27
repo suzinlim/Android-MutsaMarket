@@ -10,5 +10,7 @@
     <string name="post_detail_title_text">게시글 이름</string>
     <string name="post_detail_price_text">20,000</string>
     <string name="post_detail_content_text">이것은 상품 설명입니다.\n안녕하세요? 반갑습니다!</string>
+    <string name="post_detail_isSale">판매 중</string>
+    <string name="post_detail_doneSale">판매 완료</string>
 
 </resources>

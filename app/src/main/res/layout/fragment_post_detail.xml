@@ -107,6 +107,7 @@
             android:layout_marginBottom="10dp">
 
             <TextView
+                android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -118,6 +119,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/price_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -134,7 +136,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/postDetailContent"
+            android:id="@+id/content_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_price_layout"
