@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentMakeContentBinding
 import kotlin.math.log
+import androidx.navigation.fragment.findNavController
 
 class MakeContentFragment : Fragment() {
 
@@ -43,13 +44,20 @@ class MakeContentFragment : Fragment() {
         _binding = null
     }
 
+
+    //사진추가하는 코드+페이지 이동 코드
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val picButton = view.findViewById<Button>(R.id.pic_button)
+        val writeButton=view.findViewById<Button>(R.id.write_button) //등록하기
+        val picButton = view.findViewById<Button>(R.id.pic_button) //사진추가
         picButton.setOnClickListener { //사진추가 이벤트
             openGallery()
         }
+
+        writeButton.setOnClickListener{//등록하기 이벤트
+            val navController = findNavController()
+            navController.navigate(R.id.action_navigation_make_content_to_navigation_home)
+       }
     }
 
 
@@ -70,4 +78,7 @@ class MakeContentFragment : Fragment() {
             binding.imageView.setImageURI(selectedImageUri)
         }
     }
+
+
 }
+

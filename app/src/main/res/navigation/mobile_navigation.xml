@@ -25,7 +25,11 @@
         android:id="@+id/navigation_make_content"
         android:name="hansung.ac.mutsamarket.ui.make_content.MakeContentFragment"
         android:label="@string/title_make_content"
-        tools:layout="@layout/fragment_make_content" />
+        tools:layout="@layout/fragment_make_content" >
+        <action
+            android:id="@+id/action_navigation_make_content_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_my_page"
         android:name="hansung.ac.mutsamarket.ui.my_page.MyPageFragment"
