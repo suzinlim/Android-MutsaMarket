@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "379984642254",
+    "project_id": "mutsamarket-c6674",
+    "storage_bucket": "mutsamarket-c6674.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379984642254:android:e40c1ff2c56be87d22509f",
+        "android_client_info": {
+          "package_name": "hansung.ac.mutsamarket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN612p806GoSaN7sCbZz4pBlMMFp50RS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

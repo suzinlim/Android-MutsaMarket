@@ -1,17 +1,17 @@
 package hansung.ac.mutsamarket.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentHomeBinding
 import hansung.ac.mutsamarket.vo.Post
-import hansung.ac.mutsamarket.R
 
 class HomeFragment : Fragment() {
 
@@ -23,16 +23,29 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        initList()
-        initPostRecyclerView()
+        Log.d("check error :","#1")
+//        initList()
+        Log.d("check error :","#2")
+//        initPostRecyclerView()
+        Log.d("check error :","#3")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+
+        initList()
+        initPostRecyclerView()
+        Log.d("check error :", "#5")
+        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        Log.d("check error :", "#6")
+
+        Log.d("check error :", "#7")
 
 
         adapter.setOnItemClickListener(object : PostRecyclerViewAdapter.OnItemClickListener {
@@ -46,21 +59,21 @@ class HomeFragment : Fragment() {
             }
         })
 
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    fun initPostRecyclerView(){
+    private fun initPostRecyclerView(){
         adapter = PostRecyclerViewAdapter()
         adapter.dataList = postList
         binding.postRecyclerView.adapter = adapter
         binding.postRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    fun initList(){ //임의로 데이터 넣어서 만들어봄
+    private fun initList(){ //임의로 데이터 넣어서 만들어봄
         with(postList){
             add(Post("","title1","10,000","me", "안녕하세요\n반갑습니다!", true))
             add(Post("","title2","20,000","me", "안녕하세요\n반갑습니다!", false))
