@@ -12,5 +12,9 @@
     <string name="post_detail_content_text">이것은 상품 설명입니다.\n안녕하세요? 반갑습니다!</string>
     <string name="post_detail_isSale">판매 중</string>
     <string name="post_detail_doneSale">판매 완료</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="login_first_comment">처음이신가요?</string>
+    <string name="sign_up">회원가입</string>
 
 </resources>
