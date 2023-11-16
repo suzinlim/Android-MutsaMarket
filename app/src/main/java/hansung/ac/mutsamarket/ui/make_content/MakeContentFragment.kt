@@ -26,7 +26,7 @@ class MakeContentFragment : Fragment() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val itemsCollectionRef = db.collection("items")
-    private lateinit var selectedImageUri: Uri
+    private var selectedImageUri: Uri? = null
 
     private var _binding: FragmentMakeContentBinding? = null
     private val binding get() = _binding!!
@@ -67,6 +67,7 @@ class MakeContentFragment : Fragment() {
         writeButton.setOnClickListener {
             val currentUser = FirebaseAuth.getInstance().currentUser
             if (currentUser != null) {
+
                 val writer = currentUser.displayName ?: "Anonymous"
 
                 val title = titleEditText.text.toString()
