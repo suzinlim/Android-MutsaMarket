@@ -1,39 +1,77 @@
 package hansung.ac.mutsamarket.ui.chatting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import hansung.ac.mutsamarket.ChatRoom
 import hansung.ac.mutsamarket.databinding.FragmentChattingBinding
 
 class ChattingFragment : Fragment() {
-
     private var _binding: FragmentChattingBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var chatRoomAdapter: ChatRoomAdapter
+
+    private val firestore = FirebaseFirestore.getInstance()
+    val db: FirebaseFirestore = Firebase.firestore
+    val itemsCollectionRef = db.collection("ChatRooms")
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val chattingViewModel =
-            ViewModelProvider(this).get(ChattingViewModel::class.java)
-
         _binding = FragmentChattingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textChatting
-        chattingViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        recyclerView = binding.recyclerViewChatRooms
+        chatRoomAdapter = ChatRoomAdapter(emptyList()) // 초기에는 빈 리스트로 초기화
+        recyclerView.adapter = chatRoomAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        loadChatRooms()
+
         return root
     }
+
+    private fun loadChatRooms() {
+        firestore.collection("chatRooms")
+            .get()
+            .addOnSuccessListener { result ->
+                val chatRooms = mutableListOf<ChatRoom>()
+
+                for (document in result) {
+                    val writer = document.getString("writer") ?: ""
+                    val lastMessage = document.getString("lastMessage") ?: ""
+
+                    val chatRoom = ChatRoom(writer, lastMessage)
+                    chatRooms.add(chatRoom)
+                }
+
+                // 로그로 확인
+                Log.d("ChattingFragment", "Loaded ${chatRooms.size} chat rooms")
+
+                // RecyclerView에 데이터 설정
+                chatRoomAdapter.updateData(chatRooms)
+            }
+            .addOnFailureListener { exception ->
+                // 실패 처리
+                Log.e("ChattingFragment", "Error loading chat rooms", exception)
+            }
+    }
+
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
