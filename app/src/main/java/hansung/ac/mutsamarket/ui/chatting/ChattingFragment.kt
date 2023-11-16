@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import hansung.ac.mutsamarket.ChatRoom
 import hansung.ac.mutsamarket.databinding.FragmentChattingBinding
 
@@ -22,8 +20,6 @@ class ChattingFragment : Fragment() {
     private lateinit var chatRoomAdapter: ChatRoomAdapter
 
     private val firestore = FirebaseFirestore.getInstance()
-    val db: FirebaseFirestore = Firebase.firestore
-    val itemsCollectionRef = db.collection("ChatRooms")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +30,7 @@ class ChattingFragment : Fragment() {
         val root: View = binding.root
 
         recyclerView = binding.recyclerViewChatRooms
-        chatRoomAdapter = ChatRoomAdapter(emptyList()) // 초기에는 빈 리스트로 초기화
+        chatRoomAdapter = ChatRoomAdapter(emptyList())
         recyclerView.adapter = chatRoomAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -44,7 +40,7 @@ class ChattingFragment : Fragment() {
     }
 
     private fun loadChatRooms() {
-        firestore.collection("chatRooms")
+        firestore.collection("ChatRooms")
             .get()
             .addOnSuccessListener { result ->
                 val chatRooms = mutableListOf<ChatRoom>()
@@ -68,10 +64,6 @@ class ChattingFragment : Fragment() {
                 Log.e("ChattingFragment", "Error loading chat rooms", exception)
             }
     }
-
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
