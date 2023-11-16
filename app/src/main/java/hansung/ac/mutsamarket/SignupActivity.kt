@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import hansung.ac.mutsamarket.databinding.ActivitySignupBinding
+import hansung.ac.mutsamarket.vo.User
 
 class SignupActivity : AppCompatActivity() {
 
