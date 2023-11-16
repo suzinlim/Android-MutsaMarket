@@ -1,18 +1,25 @@
-package hansung.ac.mutsamarket.ui.chatting
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import hansung.ac.mutsamarket.ChatRoom
-import hansung.ac.mutsamarket.R // R은 프로젝트에 따라 다를 수 있습니다.
+import hansung.ac.mutsamarket.R
+import hansung.ac.mutsamarket.vo.ChatRoom
 
 class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
     RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>() {
 
-    class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val writerTextView: TextView = itemView.findViewById(R.id.textViewWriter)
-        val lastMessageTextView: TextView = itemView.findViewById(R.id.textViewLastMessage)
+    private var onItemClickListener: ((ChatRoom) -> Unit)? = null
+
+    inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val writerTextView: TextView = itemView.findViewById(R.id.writerTextView)
+        val lastMessageTextView: TextView = itemView.findViewById(R.id.lastMessageTextView)
+
+        init {
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(chatRooms[adapterPosition])
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomViewHolder {
@@ -31,9 +38,12 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
         return chatRooms.size
     }
 
+    fun setOnItemClickListener(listener: (ChatRoom) -> Unit) {
+        onItemClickListener = listener
+    }
+
     fun updateData(newChatRooms: List<ChatRoom>) {
         chatRooms = newChatRooms
         notifyDataSetChanged()
     }
-
 }
