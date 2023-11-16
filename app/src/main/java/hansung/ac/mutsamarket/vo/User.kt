@@ -1,4 +1,4 @@
-package hansung.ac.mutsamarket
+package hansung.ac.mutsamarket.vo
 
 data class User(
     var name: String,
