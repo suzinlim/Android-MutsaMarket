@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,24 +66,28 @@ class MakeContentFragment : Fragment() {
         writeButton.setOnClickListener {
             val currentUser = FirebaseAuth.getInstance().currentUser
             if (currentUser != null) {
-
-                val writer = currentUser.displayName ?: "Anonymous"
-
+                val writer = currentUser.uid //사용자의 uid
                 val title = titleEditText.text.toString()
                 val price = priceEditText.text.toString()
                 val content = contentEditText.text.toString()
                 val isSale = sellSwitch.isChecked
 
-                val post = Post(selectedImageUri.toString(), title, price, writer, content, isSale)
+                // 필수 필드가 모두 입력되었는지 확인(사진 제외 모든 필드)
+                if (title.isNotEmpty() && price.isNotEmpty() && content.isNotEmpty()) {
+                    val post = Post(selectedImageUri.toString(), title, price, writer, content, isSale)
 
-                itemsCollectionRef.add(post)
-                    .addOnSuccessListener { documentReference ->
-                        val navController = findNavController()
-                        navController.navigate(R.id.action_navigation_make_content_to_navigation_home)
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "글 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                    }
+                    itemsCollectionRef.add(post)
+                        .addOnSuccessListener { documentReference ->
+                            val navController = findNavController()
+                            navController.navigate(R.id.action_navigation_make_content_to_navigation_home)
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(requireContext(), "글 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    // 필수 필드가 입력되지 않은 경우 경고 메세지 띄움
+                    Toast.makeText(requireContext(), "모든 항목을 입력하세요.", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(requireContext(), "사용자가 로그인되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
             }
