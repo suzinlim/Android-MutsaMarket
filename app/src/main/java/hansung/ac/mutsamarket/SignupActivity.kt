@@ -1,10 +1,13 @@
 package hansung.ac.mutsamarket
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -15,6 +18,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import hansung.ac.mutsamarket.databinding.ActivitySignupBinding
 import hansung.ac.mutsamarket.vo.User
+import java.util.Calendar
 
 class SignupActivity : AppCompatActivity() {
 
@@ -33,6 +37,38 @@ class SignupActivity : AppCompatActivity() {
 
         // 데이터베이스 객체 초기화
         database = Firebase.database.reference
+
+        binding.birthDatepicker.setOnClickListener {
+
+            val datePicker = DatePicker(this)
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            datePicker.init(year, month, day) { _, selectedYear, monthOfYear, dayOfMonth ->
+                // 월이 0부터 시작하여 1을 더해주어야함
+                val month = monthOfYear + 1
+                // 선택한 날짜 표시
+                binding.birthDatepicker.text = "$selectedYear.$month.$dayOfMonth"
+            }
+
+            val dialog = AlertDialog.Builder(this)
+                .setTitle("날짜 선택")
+                .setView(datePicker)
+                .setPositiveButton("확인") { dialog, _ ->
+                    dialog.dismiss()
+                    // 확인 버튼 클릭 시 처리할 내용
+                }
+                .setNegativeButton("취소") { dialog, _ ->
+                    dialog.dismiss()
+                    // 취소 버튼 클릭 시 처리할 내용
+                }
+                .create()
+
+            dialog.show()
+
+        }
 
         binding.checkButton.setOnClickListener {
             val verifiedEmail = binding.userEmail.text.toString().trim()
