@@ -13,4 +13,5 @@
     <color name="done_sale">#e71d36</color>
     <color name="is_sale">#2ec4b6</color>
     <color name="edit_hint">#404040</color>
+    <color name="button">#002975</color>
 </resources>
