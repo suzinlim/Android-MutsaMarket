@@ -4,8 +4,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.firebase.auth.FirebaseAuth
@@ -38,38 +41,6 @@ class SignupActivity : AppCompatActivity() {
         // 데이터베이스 객체 초기화
         database = Firebase.database.reference
 
-        binding.birthDatepicker.setOnClickListener {
-
-            val datePicker = DatePicker(this)
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            datePicker.init(year, month, day) { _, selectedYear, monthOfYear, dayOfMonth ->
-                // 월이 0부터 시작하여 1을 더해주어야함
-                val month = monthOfYear + 1
-                // 선택한 날짜 표시
-                binding.birthDatepicker.text = "$selectedYear.$month.$dayOfMonth"
-            }
-
-            val dialog = AlertDialog.Builder(this)
-                .setTitle("날짜 선택")
-                .setView(datePicker)
-                .setPositiveButton("확인") { dialog, _ ->
-                    dialog.dismiss()
-                    // 확인 버튼 클릭 시 처리할 내용
-                }
-                .setNegativeButton("취소") { dialog, _ ->
-                    dialog.dismiss()
-                    // 취소 버튼 클릭 시 처리할 내용
-                }
-                .create()
-
-            dialog.show()
-
-        }
-
         binding.checkButton.setOnClickListener {
             val verifiedEmail = binding.userEmail.text.toString().trim()
 
@@ -100,6 +71,7 @@ class SignupActivity : AppCompatActivity() {
 
         binding.signupButton.setOnClickListener {
             val name = binding.userName.text.toString().trim()
+            val birth = binding.userBirth.text.toString().trim()
             val email = binding.userEmail.text.toString().trim()
             val password = binding.password.text.toString().trim()
             val checkPassword = binding.checkPassword.text.toString().trim()
@@ -120,12 +92,12 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener // 회원가입 함수 호출하지 않음
             }
             // 비밀번호 조건이 충족되고 이메일 중복 검사를 한 경우, 회원가입 시도
-            signUp(name, email, password)
+            signUp(name, birth, email, password)
         }
     }
 
     // 회원가입 함수
-    private fun signUp(name: String, email: String, password: String) {
+    private fun signUp(name: String, birth: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -133,7 +105,7 @@ class SignupActivity : AppCompatActivity() {
                     Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                     val intent: Intent = Intent(this@SignupActivity, LoginActivity::class.java)
                     startActivity(intent)
-                    addUserToDatabase(name, email, auth.currentUser?.uid!!)
+                    addUserToDatabase(name, birth, email, auth.currentUser?.uid!!)
                 } else {
                     // 회원가입 실패할 경우
                     Toast.makeText(this, "회원가입에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -142,7 +114,7 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun addUserToDatabase(name: String, email: String, uid: String) {
-        database.child("user").child(uid).setValue(User(name, email, uid))
+    private fun addUserToDatabase(name: String, birth: String, email: String, uid: String) {
+        database.child("user").child(uid).setValue(User(name, birth, email, uid))
     }
 }
