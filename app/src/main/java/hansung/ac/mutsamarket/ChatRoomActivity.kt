@@ -29,6 +29,8 @@ class ChatRoomActivity : AppCompatActivity() {
 
         // "roomId"는 ChattingFragment에서 전달한 채팅방의 고유 ID입니다.
         val roomId = intent.getStringExtra("roomId") ?: ""
+        val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
+
 
         messageAdapter = MessageAdapter(emptyList())
         recyclerView.adapter = messageAdapter
@@ -42,7 +44,7 @@ class ChatRoomActivity : AppCompatActivity() {
             val messageContent = etMessage.text.toString().trim()
 
             if (messageContent.isNotEmpty()) {
-                sendMessage(roomId, messageContent)
+                sendMessage(chatRoomId, messageContent)
             }
         }
     }
@@ -59,12 +61,14 @@ class ChatRoomActivity : AppCompatActivity() {
                     val senderId = document.getString("senderId") ?: ""
                     val content = document.getString("content") ?: ""
                     val timestamp = document.getLong("timestamp") ?: 0
+                    val chatRoomId = document.getString("chatRoomId") ?: ""
 
-                    val message = Message(senderId, content, timestamp)
+                    val message = Message(senderId, content, timestamp, chatRoomId)
                     messages.add(message)
                 }
 
                 messageAdapter.updateData(messages)
+                scrollToBottom()
             }
             .addOnFailureListener { exception ->
                 // 실패 처리
@@ -72,7 +76,7 @@ class ChatRoomActivity : AppCompatActivity() {
             }
     }
 
-    private fun sendMessage(roomId: String, content: String) {
+    private fun sendMessage(chatRoomId: String, content: String) {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -85,7 +89,9 @@ class ChatRoomActivity : AppCompatActivity() {
             val message = Message(
                 senderId = userId,
                 content = content,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
+                chatRoomId = chatRoomId // 채팅방 ID 추가
+
             )
 
             // Firestore에 Message 모델을 저장합니다.
@@ -103,5 +109,8 @@ class ChatRoomActivity : AppCompatActivity() {
             // 사용자가 로그인되어 있지 않은 경우에 대한 처리
             // 로그인 화면으로 이동하거나 사용자에게 로그인을 요청하는 등의 작업을 수행할 수 있습니다.
         }
+    }
+    private fun scrollToBottom() {
+        recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
     }
 }

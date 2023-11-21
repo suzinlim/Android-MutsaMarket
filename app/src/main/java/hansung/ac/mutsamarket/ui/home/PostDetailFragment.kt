@@ -1,6 +1,7 @@
 package hansung.ac.mutsamarket.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +10,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
+import hansung.ac.mutsamarket.ChatRoomActivity
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentPostDetailBinding
+import hansung.ac.mutsamarket.vo.ChatRoom
 import hansung.ac.mutsamarket.vo.Post
 
 class PostDetailFragment: Fragment() {
+    private val firestore = FirebaseFirestore.getInstance()
+
     private var _binding: FragmentPostDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var post: Post
@@ -39,7 +45,29 @@ class PostDetailFragment: Fragment() {
         }
         initView()
 
+        binding.chatButton.setOnClickListener {
+            createChatRoom()
+            val intent = Intent(requireContext(), ChatRoomActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
+    }
+    private fun createChatRoom() {
+        val chatRoom = ChatRoom(writer=post.writer, "대화를 시작해보세요!")
+
+        firestore.collection("ChatRooms")
+            .document(chatRoom.chatRoomId)
+            .set(chatRoom)
+            .addOnSuccessListener {
+                Log.d("ChattingFragment", "Chat room created with ID: ${chatRoom.chatRoomId}")
+
+                // 여기에 ChatRoomActivity로 이동하는 코드를 추가
+                // ChatRoomActivity에 chatRoomId를 넘겨야 합니다.
+            }
+            .addOnFailureListener { e ->
+                Log.e("ChattingFragment", "Error creating chat room", e)
+            }
     }
 
     override fun onDestroyView() {
