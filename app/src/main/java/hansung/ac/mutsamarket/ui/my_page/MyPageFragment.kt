@@ -23,16 +23,20 @@ class MyPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val myPageViewModel =
-            ViewModelProvider(this).get(MyPageViewModel::class.java)
 
         _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMyPage
-        myPageViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        // Realtime Database에서 가져온 데이터라 가정하고 임의로 값 설정
+        val userName = "아기사자"
+        val userBirth = "2000.10.24"
+        val userEmail = "mutsa@naver.com"
+
+        // 가져온 데이터를 TextView에 설정
+        binding.myName.text = userName
+        binding.myBirth.text = userBirth
+        binding.myEmail.text = userEmail
+
         return root
     }
 
