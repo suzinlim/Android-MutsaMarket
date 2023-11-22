@@ -24,15 +24,15 @@
             android:id="@+id/subLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="85dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/myName"
-                android:layout_width="122dp"
+                android:layout_width="wrap_content"
                 android:layout_height="54dp"
                 android:layout_marginStart="30dp"
-                android:text="아기사자"
+                android:layout_marginEnd="0dp"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 app:layout_constraintEnd_toStartOf="@+id/welcomeText"
@@ -40,11 +40,13 @@
 
             <TextView
                 android:id="@+id/welcomeText"
-                android:layout_width="196dp"
+                android:layout_width="wrap_content"
                 android:layout_height="26dp"
+                android:layout_marginStart="0dp"
                 android:text="@string/welcome_comment"
                 android:textColor="@color/white"
                 android:textSize="20sp"
+                android:gravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="2000.10.25"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="18dp"
-            android:text="mutsa@naver.com"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
