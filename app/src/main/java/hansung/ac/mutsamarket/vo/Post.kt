@@ -8,5 +8,6 @@ data class Post(
     val price: String,
     val writer: String,
     val content: String,
-    val isSale: Boolean
+    val isSale: Boolean,
+    val postID: String
 ): Serializable
