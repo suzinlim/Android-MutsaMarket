@@ -1,5 +1,3 @@
-package hansung.ac.mutsamarket.ui.make_content
-
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -20,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentMakeContentBinding
 import hansung.ac.mutsamarket.vo.Post
+import java.util.*
 
 class MakeContentFragment : Fragment() {
 
@@ -63,21 +62,91 @@ class MakeContentFragment : Fragment() {
             openGallery()
         }
 
-        writeButton.setOnClickListener {
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            if (currentUser != null) {
-                val writer = currentUser.uid //사용자의 uid
+        // 현재 사용자 UID 불러오기
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val writer = currentUser?.uid ?: ""
+        // 수정할 글의 postId 받아오기
+        val postIdToUpdate = arguments?.getString("postId")
+
+        // postId가 있는 경우 해당 글을 수정하기 위해 데이터를 불러와 화면에 표시
+        if (!postIdToUpdate.isNullOrEmpty()) {
+            itemsCollectionRef.document(postIdToUpdate).get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val post = document.toObject(Post::class.java)
+                        post?.let {
+                            //데이터를 화면에 표시
+                            if (it.image != null) {
+                                val imageUri = Uri.parse(it.image)
+                                binding.imageView.setImageURI(imageUri)
+                            }
+                            titleEditText.setText(it.title)
+                            priceEditText.setText(it.price)
+                            contentEditText.setText(it.content)
+                            sellSwitch.isChecked = it.isSale
+
+                            // 등록 버튼을 클릭시 기존 데이터를 업데이트
+                            writeButton.setOnClickListener {
+                                val updatedTitle = titleEditText.text.toString()
+                                val updatedPrice = priceEditText.text.toString()
+                                val updatedContent = contentEditText.text.toString()
+                                val updatedIsSale = sellSwitch.isChecked
+
+                                if (updatedTitle.isNotEmpty() && updatedPrice.isNotEmpty() && updatedContent.isNotEmpty()) {
+                                    // Post 객체 업데이트
+                                    val updatedPost = Post(
+                                        postID = postIdToUpdate,
+                                        image = selectedImageUri.toString(),
+                                        title = updatedTitle,
+                                        price = updatedPrice,
+                                        writer = writer,
+                                        content = updatedContent,
+                                        isSale = updatedIsSale
+                                    )
+
+                                    // 업데이트된 데이터를 저장
+                                    itemsCollectionRef.document(postIdToUpdate).set(updatedPost)
+                                        .addOnSuccessListener {
+                                            val navController = findNavController()
+                                            navController.navigate(R.id.action_navigation_make_content_to_navigation_home)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(requireContext(), "글 수정에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                        }
+                                } else {
+                                    Toast.makeText(requireContext(), "모든 항목을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "글을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            // postId가 없는 경우
+            writeButton.setOnClickListener {
                 val title = titleEditText.text.toString()
                 val price = priceEditText.text.toString()
                 val content = contentEditText.text.toString()
                 val isSale = sellSwitch.isChecked
 
-                // 필수 필드가 모두 입력되었는지 확인(사진 제외 모든 필드)
                 if (title.isNotEmpty() && price.isNotEmpty() && content.isNotEmpty()) {
-                    val post = Post(selectedImageUri.toString(), title, price, writer, content, isSale)
+                    val postId = UUID.randomUUID().toString()
 
-                    itemsCollectionRef.add(post)
-                        .addOnSuccessListener { documentReference ->
+                    val post = Post(
+                        postID = postId,
+                        image = selectedImageUri.toString(),
+                        title = title,
+                        price = price,
+                        writer = writer,
+                        content = content,
+                        isSale = isSale
+                    )
+
+                    // 새로운 글을 추가
+                    itemsCollectionRef.document(postId).set(post)
+                        .addOnSuccessListener {
                             val navController = findNavController()
                             navController.navigate(R.id.action_navigation_make_content_to_navigation_home)
                         }
@@ -85,11 +154,8 @@ class MakeContentFragment : Fragment() {
                             Toast.makeText(requireContext(), "글 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         }
                 } else {
-                    // 필수 필드가 입력되지 않은 경우 경고 메세지 띄움
                     Toast.makeText(requireContext(), "모든 항목을 입력하세요.", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(requireContext(), "사용자가 로그인되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
