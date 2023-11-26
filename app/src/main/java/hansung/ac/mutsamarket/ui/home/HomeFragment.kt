@@ -75,16 +75,16 @@ class HomeFragment : Fragment() {
 
     private fun initList(){ //임의로 데이터 넣어서 만들어봄
         with(postList){
-            //add(Post("","title1","10,000","me", "안녕하세요\n반갑습니다!", true))
-            //add(Post("","title2","20,000","me", "안녕하세요\n반갑습니다!", false))
-            //add(Post("","title3","30,000","me", "안녕하세요\n반갑습니다!", true))
-            //add(Post("","title4","40,000","me", "안녕하세요\n반갑습니다!", false))
-            //add(Post("","title5","50,000","me", "안녕하세요\n반갑습니다!", true))
-            //add(Post("","title6","60,000","me", "안녕하세요\n반갑습니다!", false))
-            //add(Post("","title7","70,000","me", "안녕하세요\n반갑습니다!", true))
-            //add(Post("","title8","80,000","me", "안녕하세요\n반갑습니다!", false))
-            //add(Post("","title9","90,000","me", "안녕하세요\n반갑습니다!", true))
-            //add(Post("","title10","100,000","me", "안녕하세요\n반갑습니다!", false))
+            add(Post("","title1","10,000","me", "안녕하세요\n반갑습니다!", true))
+            add(Post("","title2","20,000","me", "안녕하세요\n반갑습니다!", false))
+            add(Post("","title3","30,000","me", "안녕하세요\n반갑습니다!", true))
+            add(Post("","title4","40,000","me", "안녕하세요\n반갑습니다!", false))
+            add(Post("","title5","50,000","me", "안녕하세요\n반갑습니다!", true))
+            add(Post("","title6","60,000","me", "안녕하세요\n반갑습니다!", false))
+            add(Post("","title7","70,000","me", "안녕하세요\n반갑습니다!", true))
+            add(Post("","title8","80,000","me", "안녕하세요\n반갑습니다!", false))
+            add(Post("","title9","90,000","me", "안녕하세요\n반갑습니다!", true))
+            add(Post("","title10","100,000","me", "안녕하세요\n반갑습니다!", false))
         }
     }
 
