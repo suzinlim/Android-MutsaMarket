@@ -4,7 +4,7 @@ import java.util.UUID
 
 data class ChatRoom(
     val writer: String,
-    val lastMessage: String
+    val email: String
 ) {
     val chatRoomId: String = generateRandomRoomId() // 채팅방 ID 추가
 
