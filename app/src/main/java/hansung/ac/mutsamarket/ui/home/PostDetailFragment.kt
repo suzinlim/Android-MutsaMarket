@@ -1,3 +1,4 @@
+//PostDetailFragment.kt
 package hansung.ac.mutsamarket.ui.home
 
 import android.annotation.SuppressLint
@@ -10,12 +11,15 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import hansung.ac.mutsamarket.ChatRoomActivity
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentPostDetailBinding
 import hansung.ac.mutsamarket.vo.ChatRoom
 import hansung.ac.mutsamarket.vo.Post
+import java.util.UUID
 
 class PostDetailFragment: Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
@@ -46,29 +50,68 @@ class PostDetailFragment: Fragment() {
         initView()
 
         binding.chatButton.setOnClickListener {
+            val chatRoomId = getChatRoomId()
             createChatRoom()
             val intent = Intent(requireContext(), ChatRoomActivity::class.java)
+            intent.putExtra("chatRoomId",chatRoomId)
             startActivity(intent)
         }
 
         return root
     }
+    private fun getChatRoomId(): String {
+        return UUID.randomUUID().toString()
+    }
     private fun createChatRoom() {
-        val chatRoom = ChatRoom(writer=post.writer, "대화를 시작해보세요!")
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
 
-        firestore.collection("ChatRooms")
-            .document(chatRoom.chatRoomId)
-            .set(chatRoom)
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val userEmail = currentUser.email
+
+            val newChatRoomId = UUID.randomUUID().toString()
+
+            val chatRoomData = hashMapOf(
+                "writer" to userId,
+                "email" to userEmail
+            )
+
+            FirebaseFirestore.getInstance().collection("ChatRooms")
+                .document(newChatRoomId)
+                .set(chatRoomData)
+                .addOnSuccessListener {
+                    addWelcomeMessage(newChatRoomId, userId) // 변경된 부분
+                }
+                .addOnFailureListener { e ->
+                    // 실패 처리 코드 작성
+                }
+        } else {
+            // 사용자가 로그인되어 있지 않은 경우에 대한 처리
+            // 로그인 화면으로 이동하거나 사용자에게 로그인을 요청하는 등의 작업을 수행
+        }
+    }
+    private fun addWelcomeMessage(chatRoomId: String, senderId: String) {
+        val messageData = hashMapOf(
+            "sender" to senderId,
+            "content" to "채팅방에 오신 것을 환영합니다!",
+            "timestamp" to FieldValue.serverTimestamp()
+        )
+
+        FirebaseFirestore.getInstance().collection("ChatRooms")
+            .document(chatRoomId)
+            .collection("Messages")
+            .add(messageData)
             .addOnSuccessListener {
-                Log.d("ChattingFragment", "Chat room created with ID: ${chatRoom.chatRoomId}")
-
-                // 여기에 ChatRoomActivity로 이동하는 코드를 추가
-                // ChatRoomActivity에 chatRoomId를 넘겨야 합니다.
+                // 메시지 추가 성공
+                // 여기에서 필요한 처리 코드를 작성
             }
             .addOnFailureListener { e ->
-                Log.e("ChattingFragment", "Error creating chat room", e)
+                // 메시지 추가 실패
+                // 실패 처리 코드 작성
             }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

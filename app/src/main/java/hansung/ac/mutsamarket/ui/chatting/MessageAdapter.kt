@@ -19,6 +19,9 @@ class MessageAdapter(private var messages: List<Message>) :
         notifyDataSetChanged()
     }
 
+    fun getMessages(): List<Message> {
+        return messages
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_message, parent, false)
