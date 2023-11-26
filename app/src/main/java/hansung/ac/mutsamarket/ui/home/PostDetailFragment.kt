@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
-import hansung.ac.mutsamarket.ChatRoomActivity
+import hansung.ac.mutsamarket.ChatRoomTestActivity
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentPostDetailBinding
 import hansung.ac.mutsamarket.vo.ChatRoom
@@ -47,7 +47,7 @@ class PostDetailFragment: Fragment() {
 
         binding.chatButton.setOnClickListener {
             createChatRoom()
-            val intent = Intent(requireContext(), ChatRoomActivity::class.java)
+            val intent = Intent(requireContext(), ChatRoomTestActivity::class.java)
             startActivity(intent)
         }
 
