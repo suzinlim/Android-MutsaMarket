@@ -95,7 +95,7 @@ class MakeContentFragment : Fragment() {
                                 if (updatedTitle.isNotEmpty() && updatedPrice.isNotEmpty() && updatedContent.isNotEmpty()) {
                                     // Post 객체 업데이트
                                     val updatedPost = Post(
-                                        postID = postIdToUpdate,
+                                        //postID = postIdToUpdate,
                                         image = selectedImageUri.toString(),
                                         title = updatedTitle,
                                         price = updatedPrice,
@@ -135,7 +135,7 @@ class MakeContentFragment : Fragment() {
                     val postId = UUID.randomUUID().toString()
 
                     val post = Post(
-                        postID = postId,
+                        //postID = postId,
                         image = selectedImageUri.toString(),
                         title = title,
                         price = price,
