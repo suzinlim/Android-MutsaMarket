@@ -1,0 +1,31 @@
+<!-- res/layout/item_other_message.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 상대방 메시지 -->
+    <TextView
+        android:id="@+id/textMessageContentOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other's Message"
+        android:textSize="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/other_message_background" />
+
+    <!-- 내 메시지 -->
+    <TextView
+        android:id="@+id/textMessageContentMy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Message"
+        android:background="@drawable/my_message_background"
+        android:visibility="gone" /> <!-- 내 메시지는 초기에는 숨김 처리 -->
+</LinearLayout>

@@ -1,0 +1,33 @@
+<!-- res/layout/item_my_message.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View    android:layout_width="0dp"    android:layout_height="0dp"    android:layout_weight="1" />
+    <!-- 내 메시지 -->
+    <TextView
+        android:id="@+id/textMessageContentMy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Message"
+        android:layout_gravity="right"
+        android:textSize="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/my_message_background" />
+
+    <!-- 상대방 메시지 -->
+    <TextView
+        android:id="@+id/textMessageContentOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other's Message"
+        android:background="@drawable/other_message_background"
+        android:visibility="gone"/>
+</LinearLayout>

@@ -30,10 +30,10 @@ class ChatRoomActivity : AppCompatActivity() {
 
         // "roomId"는 ChattingFragment에서 전달한 채팅방의 고유 ID입니다.
         val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
 
-
-        messageAdapter = MessageAdapter(emptyList())
+        messageAdapter = MessageAdapter(emptyList(),currentUserId)
         recyclerView.adapter = messageAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
