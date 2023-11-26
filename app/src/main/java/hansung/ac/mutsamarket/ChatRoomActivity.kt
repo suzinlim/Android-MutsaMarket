@@ -107,6 +107,8 @@ class ChatRoomActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     // 메시지 전송 성공
                     etMessage.text.clear()
+                    messageAdapter.addMessage(message)
+                    scrollToBottom()
                 }
                 .addOnFailureListener { e ->
                     // 메시지 전송 실패 처리
