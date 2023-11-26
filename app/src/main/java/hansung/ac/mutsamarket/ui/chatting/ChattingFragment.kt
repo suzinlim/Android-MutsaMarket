@@ -1,3 +1,4 @@
+//ChattingFragment.kt
 package hansung.ac.mutsamarket.ui.chatting
 
 import ChatRoomAdapter
@@ -11,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import hansung.ac.mutsamarket.ChatRoomTestActivity
+import hansung.ac.mutsamarket.ChatRoomActivity
 import hansung.ac.mutsamarket.vo.ChatRoom
 import hansung.ac.mutsamarket.databinding.FragmentChattingBinding
 
@@ -49,7 +50,7 @@ class ChattingFragment : Fragment() {
     private fun navigateToChatRoom(chatRoom: ChatRoom) {
         // 채팅방으로 이동하는 코드를 작성
         // 적절한 Intent를 사용하여 다음 화면으로 이동하고 필요한 정보를 전달
-        val intent = Intent(context, ChatRoomTestActivity::class.java)
+        val intent = Intent(context, ChatRoomActivity::class.java)
         intent.putExtra("chatRoomId", chatRoom.chatRoomId)
         startActivity(intent)
     }

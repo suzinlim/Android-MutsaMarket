@@ -1,3 +1,4 @@
+//ChattingViewModel.kt
 package hansung.ac.mutsamarket.ui.chatting
 
 import androidx.lifecycle.LiveData

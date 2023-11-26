@@ -1,3 +1,4 @@
+//ChatRoomAdapter.kt
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
     override fun onBindViewHolder(holder: ChatRoomViewHolder, position: Int) {
         val chatRoom = chatRooms[position]
         holder.writerTextView.text = chatRoom.writer
-        holder.emailTextView.text = chatRoom.lastMessage
+        holder.emailTextView.text = chatRoom.email
     }
 
     override fun getItemCount(): Int {
