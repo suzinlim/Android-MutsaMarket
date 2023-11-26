@@ -13,7 +13,7 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val writerTextView: TextView = itemView.findViewById(R.id.writerTextView)
-        val lastMessageTextView: TextView = itemView.findViewById(R.id.lastMessageTextView)
+        val emailTextView: TextView = itemView.findViewById(R.id.emailTextView)
 
         init {
             itemView.setOnClickListener {
@@ -31,7 +31,7 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
     override fun onBindViewHolder(holder: ChatRoomViewHolder, position: Int) {
         val chatRoom = chatRooms[position]
         holder.writerTextView.text = chatRoom.writer
-        holder.lastMessageTextView.text = chatRoom.lastMessage
+        holder.emailTextView.text = chatRoom.lastMessage
     }
 
     override fun getItemCount(): Int {
