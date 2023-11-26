@@ -45,8 +45,7 @@ class ChatRoomActivity : AppCompatActivity() {
             val messageContent = etMessage.text.toString().trim()
 
             if (messageContent.isNotEmpty()) {
-                val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
-                sendMessage(chatRoomId, messageContent)
+                sendMessage(messageContent)
             }
         }
     }
@@ -81,7 +80,7 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
 
-    private fun sendMessage(chatRoomId: String, content: String) {
+    private fun sendMessage(content: String) {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -96,8 +95,13 @@ class ChatRoomActivity : AppCompatActivity() {
                 timestamp = System.currentTimeMillis(),
             )
 
-            // Firestore에 Message 모델을 저장합니다.
-            firestore.collection("Messages")
+            // Firestore에 Message 모델을 현재 채팅방의 서브컬렉션에 저장합니다.
+            val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
+            Log.d("ChatRoomActivity", "Chat Room ID: $chatRoomId")  // 로그 추가
+
+            firestore.collection("ChatRooms")
+                .document(chatRoomId)
+                .collection("Messages")
                 .add(message)
                 .addOnSuccessListener {
                     // 메시지 전송 성공
@@ -112,6 +116,8 @@ class ChatRoomActivity : AppCompatActivity() {
             // 로그인 화면으로 이동하거나 사용자에게 로그인을 요청하는 등의 작업을 수행할 수 있습니다.
         }
     }
+
+
 
 
     private fun scrollToBottom() {
