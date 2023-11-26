@@ -18,6 +18,10 @@ class MessageAdapter(
         messages = newMessages
         notifyDataSetChanged()
     }
+    fun addMessage(message: Message) {
+        messages = messages + listOf(message)
+        notifyItemInserted(messages.size - 1)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
