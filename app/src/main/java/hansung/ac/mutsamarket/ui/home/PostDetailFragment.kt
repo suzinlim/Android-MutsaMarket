@@ -50,10 +50,10 @@ class PostDetailFragment: Fragment() {
         initView()
 
         binding.chatButton.setOnClickListener {
-            val chatRoomId = getChatRoomId()
-            createChatRoom()
+            val newChatRoomId = getChatRoomId()
+            createChatRoom(newChatRoomId)
             val intent = Intent(requireContext(), ChatRoomActivity::class.java)
-            intent.putExtra("chatRoomId",chatRoomId)
+            intent.putExtra("chatRoomId", newChatRoomId)
             startActivity(intent)
         }
 
@@ -62,7 +62,7 @@ class PostDetailFragment: Fragment() {
     private fun getChatRoomId(): String {
         return UUID.randomUUID().toString()
     }
-    private fun createChatRoom() {
+    private fun createChatRoom(newChatRoomId: String) {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -70,27 +70,32 @@ class PostDetailFragment: Fragment() {
             val userId = currentUser.uid
             val userEmail = currentUser.email
 
-            val newChatRoomId = UUID.randomUUID().toString()
-
             val chatRoomData = hashMapOf(
                 "writer" to userId,
                 "email" to userEmail
             )
 
+            // Firestore에 새로운 채팅방 추가
             FirebaseFirestore.getInstance().collection("ChatRooms")
                 .document(newChatRoomId)
                 .set(chatRoomData)
                 .addOnSuccessListener {
-                    addWelcomeMessage(newChatRoomId, userId) // 변경된 부분
+                    // 채팅방이 성공적으로 추가되면 해당 문서의 ID를 받아옵니다.
+                    Log.d("ChatRoomActivity", "Chat room added with ID: $newChatRoomId")
+
+                    // 이제 추가된 채팅방 ID(newChatRoomId)를 사용하여 메시지 전송 등의 작업을 수행할 수 있습니다.
+                    addWelcomeMessage(newChatRoomId, userId)
                 }
                 .addOnFailureListener { e ->
                     // 실패 처리 코드 작성
+                    Log.e("ChatRoomActivity", "Error adding chat room", e)
                 }
         } else {
             // 사용자가 로그인되어 있지 않은 경우에 대한 처리
             // 로그인 화면으로 이동하거나 사용자에게 로그인을 요청하는 등의 작업을 수행
         }
     }
+
     private fun addWelcomeMessage(chatRoomId: String, senderId: String) {
         val messageData = hashMapOf(
             "sender" to senderId,
