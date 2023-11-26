@@ -84,7 +84,6 @@ class PostDetailFragment: Fragment() {
                     Log.d("ChatRoomActivity", "Chat room added with ID: $newChatRoomId")
 
                     // 이제 추가된 채팅방 ID(newChatRoomId)를 사용하여 메시지 전송 등의 작업을 수행할 수 있습니다.
-                    addWelcomeMessage(newChatRoomId, userId)
                 }
                 .addOnFailureListener { e ->
                     // 실패 처리 코드 작성
@@ -96,26 +95,6 @@ class PostDetailFragment: Fragment() {
         }
     }
 
-    private fun addWelcomeMessage(chatRoomId: String, senderId: String) {
-        val messageData = hashMapOf(
-            "sender" to senderId,
-            "content" to "채팅방에 오신 것을 환영합니다!",
-            "timestamp" to FieldValue.serverTimestamp()
-        )
-
-        FirebaseFirestore.getInstance().collection("ChatRooms")
-            .document(chatRoomId)
-            .collection("Messages")
-            .add(messageData)
-            .addOnSuccessListener {
-                // 메시지 추가 성공
-                // 여기에서 필요한 처리 코드를 작성
-            }
-            .addOnFailureListener { e ->
-                // 메시지 추가 실패
-                // 실패 처리 코드 작성
-            }
-    }
 
 
     override fun onDestroyView() {

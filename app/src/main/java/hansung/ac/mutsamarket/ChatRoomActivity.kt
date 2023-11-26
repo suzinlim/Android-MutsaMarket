@@ -64,9 +64,9 @@ class ChatRoomActivity : AppCompatActivity() {
                     val senderId = document.getString("senderId") ?: ""
                     val content = document.getString("content") ?: ""
                     val timestamp = document.getLong("timestamp") ?: 0
-                    val chatRoomId = document.getString("chatRoomId") ?: ""
+                    //val chatRoomId = document.getString("chatRoomId") ?: ""
 
-                    val message = Message(senderId, content, timestamp)
+                    val message = Message(senderId, content, timestamp,document.id)
                     messages.add(message)
                 }
 
@@ -88,16 +88,17 @@ class ChatRoomActivity : AppCompatActivity() {
             // 현재 사용자의 정보를 가져옵니다.
             val userId = currentUser.uid
 
+            // Firestore에 Message 모델을 현재 채팅방의 서브컬렉션에 저장합니다.
+            val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
+            Log.d("ChatRoomActivity", "Chat Room ID: $chatRoomId")  // 로그 추가
+
             // 예시로 가져온 사용자 정보를 Message 모델에 적용
             val message = Message(
                 senderId = userId,
                 content = content,
                 timestamp = System.currentTimeMillis(),
+                chatRoomId = chatRoomId
             )
-
-            // Firestore에 Message 모델을 현재 채팅방의 서브컬렉션에 저장합니다.
-            val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
-            Log.d("ChatRoomActivity", "Chat Room ID: $chatRoomId")  // 로그 추가
 
             firestore.collection("ChatRooms")
                 .document(chatRoomId)
