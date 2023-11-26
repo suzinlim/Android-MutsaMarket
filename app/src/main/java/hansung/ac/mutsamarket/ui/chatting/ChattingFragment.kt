@@ -51,8 +51,21 @@ class ChattingFragment : Fragment() {
         // 채팅방으로 이동하는 코드를 작성
         // 적절한 Intent를 사용하여 다음 화면으로 이동하고 필요한 정보를 전달
         val intent = Intent(context, ChatRoomActivity::class.java)
-        //intent.putExtra("chatRoomId", chatRoom.chatRoomId)
-        startActivity(intent)
+        firestore.collection("ChatRooms")
+            .whereEqualTo("writer", chatRoom.writer)
+            .whereEqualTo("email", chatRoom.email)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    intent.putExtra("chatRoomId", document.id)
+                    startActivity(intent)
+                    break  // 여러 개의 문서 중 하나만 사용하려면 반복문 종료
+                }
+            }
+            .addOnFailureListener { exception ->
+                // 실패 처리
+                Log.e("ChattingFragment", "Error getting chat room ID", exception)
+            }
     }
 
 
