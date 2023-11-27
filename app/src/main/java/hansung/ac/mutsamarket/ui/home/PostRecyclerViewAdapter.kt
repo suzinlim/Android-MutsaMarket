@@ -1,15 +1,19 @@
 package hansung.ac.mutsamarket.ui.home
 
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import hansung.ac.mutsamarket.databinding.ItemPostBinding
 import hansung.ac.mutsamarket.vo.Post
 
 class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.PostViewHolder>() {
 
     var dataList = mutableListOf<Post>()
+    val db = FirebaseFirestore.getInstance()
+    var userName: String = "Annonymous User"
     interface OnItemClickListener {
         fun onItemClick(post: Post)
     }
@@ -22,10 +26,25 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
        fun bind(post: Post){
 //           binding.itemPostImage = post.image
            binding.itemPostTitle.text = post.title
-           binding.itemPostPrice.text = post.price.toString()
-           binding.itemPostIsSale.text = post.isSale.toString()
-           binding.itemPostWriter.text = post.title
+           binding.itemPostPrice.text = post.price
+           if(post.isSale){ binding.itemPostIsSale.text = "판매 중"}
+           else{ binding.itemPostIsSale.text = "판매 완료"}
 
+           db.collection("users")
+               .whereEqualTo("uid", post.writer)
+               .get()
+               .addOnSuccessListener { querySnapshot ->
+                   for (document in querySnapshot.documents) {
+                       // 문서에서 데이터를 가져오기
+                       userName = document.getString("name").toString()
+                   }
+               }
+               .addOnFailureListener { e ->
+                   Log.d("firebaseLog","Error getting documents: $e")
+               }
+           binding.itemPostWriter.text = userName
+           val contentUri = Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000000033/ORIGINAL/NONE/image%2Fjpeg/2129791021")
+           binding.itemPostImage.setImageURI(contentUri)
            binding.root.setOnClickListener {
                itemClickListener?.onItemClick(post)
            }
