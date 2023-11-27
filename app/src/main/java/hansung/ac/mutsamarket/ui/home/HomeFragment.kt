@@ -23,13 +23,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        Log.d("check error :","#1")
-//        initList()
-        Log.d("check error :","#2")
-//        initPostRecyclerView()
-        Log.d("check error :","#3")
     }
 
     override fun onCreateView(
@@ -38,15 +32,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         initList()
         initPostRecyclerView()
-        Log.d("check error :", "#5")
-        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        Log.d("check error :", "#6")
-
-        Log.d("check error :", "#7")
-
 
         adapter.setOnItemClickListener(object : PostRecyclerViewAdapter.OnItemClickListener {
             override fun onItemClick(post: Post) {
