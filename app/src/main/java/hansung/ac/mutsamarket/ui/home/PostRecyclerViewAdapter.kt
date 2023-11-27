@@ -43,8 +43,8 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
                    Log.d("firebaseLog","Error getting documents: $e")
                }
            binding.itemPostWriter.text = userName
-           val contentUri = Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000000033/ORIGINAL/NONE/image%2Fjpeg/2129791021")
-           binding.itemPostImage.setImageURI(contentUri)
+//           val contentUri = Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000000033/ORIGINAL/NONE/image%2Fjpeg/2129791021")
+//           binding.itemPostImage.setImageURI(contentUri)
            binding.root.setOnClickListener {
                itemClickListener?.onItemClick(post)
            }

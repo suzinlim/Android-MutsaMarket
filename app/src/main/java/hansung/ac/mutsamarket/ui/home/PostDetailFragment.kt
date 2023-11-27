@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ import java.util.UUID
 
 class PostDetailFragment: Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
+    val db = FirebaseFirestore.getInstance()
 
     private var _binding: FragmentPostDetailBinding? = null
     private val binding get() = _binding!!
@@ -104,9 +106,35 @@ class PostDetailFragment: Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initView(){
+        var myUser = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("detail", myUser.toString())
+
+        // 채팅하기 버튼 / 수정하기 버튼
+        if(myUser == post.writer){
+            binding.chatButton.isVisible = false
+            binding.modifyButton.isVisible = true
+        }
+        else{
+            binding.chatButton.isVisible = true
+            binding.modifyButton.isVisible= false
+        }
+
         // 작성자 이름
         val writerTextView = binding.writerText
-        writerTextView.text = post.writer
+        var userName: String = "Annonymous User"
+        db.collection("users")
+            .whereEqualTo("uid", post.writer)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    // 문서에서 데이터를 가져오기
+                    userName = document.getString("name").toString()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d("firebaseLog","Error getting documents: $e")
+            }
+        writerTextView.text = userName
 
         // 판매 여부
         val isSaleTextView = binding.isSaleText
