@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import hansung.ac.mutsamarket.databinding.ActivitySignupBinding
 import hansung.ac.mutsamarket.vo.User
@@ -28,6 +29,8 @@ class SignupActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
     lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val itemsCollectionRef = db.collection("items")
 
     var isEmailChecked = false // 이메일 중복 확인 여부
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +118,19 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun addUserToDatabase(name: String, birth: String, email: String, uid: String) {
-        database.child("user").child(uid).setValue(User(name, birth, email, uid))
+        val user = User(name, birth, email, uid)
+        database.child("user").child(uid).setValue(user)
+        db.collection("users")
+            .add(user)
+            .addOnSuccessListener { documentReference ->
+                // 성공적으로 데이터가 추가됨
+                val documentId = documentReference.id
+                println("DocumentSnapshot added with ID: $documentId")
+            }
+            .addOnFailureListener { e ->
+                // 데이터 추가 실패
+                println("Error adding document: $e")
+            }
+
     }
 }
