@@ -37,7 +37,6 @@ class PostDetailFragment: Fragment() {
             Log.d("postdetail","showPost: ${post.toString()}")
         }
 
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -58,6 +57,14 @@ class PostDetailFragment: Fragment() {
             intent.putExtra("chatRoomId", newChatRoomId)
             startActivity(intent)
         }
+
+        binding.modifyButton.setOnClickListener {
+            Log.d("btn","modifyBtn click")
+            val navController = findNavController()
+            navController.navigate(R.id.action_navigation_post_detail_to_navigation_make_content)
+        }
+
+
 
         return root
     }
@@ -118,6 +125,7 @@ class PostDetailFragment: Fragment() {
             binding.chatButton.isVisible = true
             binding.modifyButton.isVisible= false
         }
+
 
         // 작성자 이름
         val writerTextView = binding.writerText
