@@ -1,8 +1,11 @@
+package hansung.ac.mutsamarket.ui.make_content
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +24,9 @@ import hansung.ac.mutsamarket.vo.Post
 import java.util.*
 
 class MakeContentFragment : Fragment() {
-
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val itemsCollectionRef = db.collection("items")
     private var selectedImageUri: Uri? = null
-
     private var _binding: FragmentMakeContentBinding? = null
     private val binding get() = _binding!!
 
@@ -50,7 +51,6 @@ class MakeContentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val writeButton = view.findViewById<Button>(R.id.write_button)
         val picButton = view.findViewById<Button>(R.id.pic_button)
         val titleEditText = view.findViewById<EditText>(R.id.edit_name)
@@ -62,20 +62,23 @@ class MakeContentFragment : Fragment() {
             openGallery()
         }
 
-        // 현재 사용자 UID 불러오기
         val currentUser = FirebaseAuth.getInstance().currentUser
         val writer = currentUser?.uid ?: ""
-        // 수정할 글의 postId 받아오기
-        val postIdToUpdate = arguments?.getString("postId")
-
-        // postId가 있는 경우 해당 글을 수정하기 위해 데이터를 불러와 화면에 표시
+        val postIdToUpdate = arguments?.getString("postID")
+        if (postIdToUpdate != null) {
+            Log.d("PostId",postIdToUpdate)
+        }
+        else{
+            Log.d("postId","null")
+        }
         if (!postIdToUpdate.isNullOrEmpty()) {
+
+            writeButton.text = "수정하기"
             itemsCollectionRef.document(postIdToUpdate).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val post = document.toObject(Post::class.java)
                         post?.let {
-                            //데이터를 화면에 표시
                             if (it.image != null) {
                                 val imageUri = Uri.parse(it.image)
                                 binding.imageView.setImageURI(imageUri)
@@ -85,7 +88,6 @@ class MakeContentFragment : Fragment() {
                             contentEditText.setText(it.content)
                             sellSwitch.isChecked = it.isSale
 
-                            // 등록 버튼을 클릭시 기존 데이터를 업데이트
                             writeButton.setOnClickListener {
                                 val updatedTitle = titleEditText.text.toString()
                                 val updatedPrice = priceEditText.text.toString()
@@ -93,7 +95,6 @@ class MakeContentFragment : Fragment() {
                                 val updatedIsSale = sellSwitch.isChecked
 
                                 if (updatedTitle.isNotEmpty() && updatedPrice.isNotEmpty() && updatedContent.isNotEmpty()) {
-                                    // Post 객체 업데이트
                                     val updatedPost = Post(
                                         postID = postIdToUpdate,
                                         image = selectedImageUri.toString(),
@@ -104,7 +105,6 @@ class MakeContentFragment : Fragment() {
                                         isSale = updatedIsSale
                                     )
 
-                                    // 업데이트된 데이터를 저장
                                     itemsCollectionRef.document(postIdToUpdate).set(updatedPost)
                                         .addOnSuccessListener {
                                             val navController = findNavController()
@@ -124,7 +124,7 @@ class MakeContentFragment : Fragment() {
                     Toast.makeText(requireContext(), "글을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            // postId가 없는 경우
+            writeButton.text = "등록하기"
             writeButton.setOnClickListener {
                 val title = titleEditText.text.toString()
                 val price = priceEditText.text.toString()
@@ -144,7 +144,6 @@ class MakeContentFragment : Fragment() {
                         isSale = isSale
                     )
 
-                    // 새로운 글을 추가
                     itemsCollectionRef.document(postId).set(post)
                         .addOnSuccessListener {
                             val navController = findNavController()
