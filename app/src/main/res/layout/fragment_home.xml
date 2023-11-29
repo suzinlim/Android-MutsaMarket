@@ -8,20 +8,40 @@
     android:background="@color/backgroud_dark_blue"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/white">
-        <Button
-            android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/item_bg_outline">
+        <TextView
+            android:id="@+id/allPost"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/post_detail_title_text"/>
-        <Button
-            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="@drawable/item_bg_on"
+            android:text="@string/allPost"/>
+        <TextView
+            android:id="@+id/isSale"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/post_detail_title_text"/>
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/isSale"/>
+        <TextView
+            android:id="@+id/isNotSale"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:gravity="center"
+            android:text="@string/isNotSale"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postRecyclerView"
