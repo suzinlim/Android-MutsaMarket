@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -30,7 +31,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +41,34 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         initList()
         initPostRecyclerView()
+
+        binding.allPost.setOnClickListener(){
+            binding.allPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.allPost.setBackgroundResource(R.drawable.item_bg_on)
+            binding.isSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.isSale.setBackgroundResource(0)
+            binding.isNotSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.isNotSale.setBackgroundResource(0)
+            homeViewModel.updatePostList()
+        }
+        binding.isSale.setOnClickListener(){
+            binding.allPost.setBackgroundResource(0)
+            binding.allPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.isSale.setBackgroundResource(R.drawable.item_bg_on)
+            binding.isSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.isNotSale.setBackgroundResource(0)
+            binding.isNotSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            homeViewModel.updateIsSalePostList(true)
+        }
+        binding.isNotSale.setOnClickListener(){
+            binding.allPost.setBackgroundResource(0)
+            binding.allPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.isSale.setBackgroundResource(0)
+            binding.isSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.isNotSale.setBackgroundResource(R.drawable.item_bg_on)
+            binding.isNotSale.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            homeViewModel.updateIsSalePostList(false)
+        }
 
         homeViewModel.postList.observe(viewLifecycleOwner) { postList ->
             Log.d("fbPostList", postList.toString())
@@ -77,5 +106,4 @@ class HomeFragment : Fragment() {
         homeViewModel.updatePostList()
 //        homeViewModel.updateIsSalePostList(false)
     }
-
 }
