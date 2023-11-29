@@ -1,11 +1,11 @@
 //ChatRoomAdapter.kt
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hansung.ac.mutsamarket.R
-import hansung.ac.mutsamarket.vo.ChatRoom
 
 class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
     RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>() {
@@ -14,10 +14,11 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val writerTextView: TextView = itemView.findViewById(R.id.writerTextView)
-        val emailTextView: TextView = itemView.findViewById(R.id.emailTextView)
+        val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
 
         init {
             itemView.setOnClickListener {
+                Log.d("ChatRoomAdapter", "포지션 $adapterPosition 에서 아이템이 클릭되었습니다.")
                 onItemClickListener?.invoke(chatRooms[adapterPosition])
             }
         }
@@ -31,8 +32,9 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
 
     override fun onBindViewHolder(holder: ChatRoomViewHolder, position: Int) {
         val chatRoom = chatRooms[position]
-        holder.writerTextView.text = chatRoom.writer
-        holder.emailTextView.text = chatRoom.email
+        holder.titleTextView.text = chatRoom.title
+        holder.writerTextView.text = "대화를 시작해보세요!"
+
     }
 
     override fun getItemCount(): Int {

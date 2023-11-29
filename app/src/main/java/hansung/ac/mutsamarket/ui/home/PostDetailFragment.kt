@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import hansung.ac.mutsamarket.ChatRoomActivity
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentPostDetailBinding
-import hansung.ac.mutsamarket.vo.ChatRoom
 import hansung.ac.mutsamarket.vo.Post
 import java.util.UUID
 
@@ -77,14 +76,13 @@ class PostDetailFragment: Fragment() {
 
         if (currentUser != null) {
             val userId = currentUser.uid
-            val userEmail = currentUser.email
 
             val chatRoomData = hashMapOf(
-                "writer" to userId,
-                "email" to userEmail
+                "senderId" to userId,        // 현재 사용자의 UID
+                "receiverId" to post.writer, // 게시글 작성자의 UID
+                "title" to post.title
             )
 
-            // Firestore에 새로운 채팅방 추가
             FirebaseFirestore.getInstance().collection("ChatRooms")
                 .document(newChatRoomId)
                 .set(chatRoomData)
@@ -103,6 +101,8 @@ class PostDetailFragment: Fragment() {
             // 로그인 화면으로 이동하거나 사용자에게 로그인을 요청하는 등의 작업을 수행
         }
     }
+
+
 
 
 
