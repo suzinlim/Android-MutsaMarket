@@ -60,11 +60,11 @@ class PostDetailFragment: Fragment() {
 
         binding.modifyButton.setOnClickListener {
             Log.d("btn","modifyBtn click")
+            val bundle = Bundle()
             val navController = findNavController()
-            navController.navigate(R.id.action_navigation_post_detail_to_navigation_make_content)
+            bundle.putString("postID", post.postID)
+            navController.navigate(R.id.action_navigation_post_detail_to_navigation_make_content, bundle)
         }
-
-
 
         return root
     }
@@ -129,20 +129,7 @@ class PostDetailFragment: Fragment() {
 
         // 작성자 이름
         val writerTextView = binding.writerText
-        var userName: String = "Annonymous User"
-        db.collection("users")
-            .whereEqualTo("uid", post.writer)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot.documents) {
-                    // 문서에서 데이터를 가져오기
-                    userName = document.getString("name").toString()
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.d("firebaseLog","Error getting documents: $e")
-            }
-        writerTextView.text = userName
+        writerTextView.text = post.writerName
 
         // 판매 여부
         val isSaleTextView = binding.isSaleText

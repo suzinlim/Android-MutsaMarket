@@ -32,7 +32,8 @@ class HomeViewModel : ViewModel() {
                         data["writer"].toString(),
                         data["content"].toString(),
                         data["sale"] as Boolean,
-                        data["postID"].toString())
+                        data["postID"].toString(),
+                        data["writerName"].toString())
                     postList.add(post)
                 }
                 _postList.value = postList
@@ -57,7 +58,8 @@ class HomeViewModel : ViewModel() {
                             data["writer"].toString(),
                             data["content"].toString(),
                             data["sale"] as Boolean,
-                            data["postID"].toString())
+                            data["postID"].toString(),
+                            data["writerName"].toString())
                         postList.add(post)
                     }
                 }

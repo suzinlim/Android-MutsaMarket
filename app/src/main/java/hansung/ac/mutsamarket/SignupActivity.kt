@@ -120,12 +120,8 @@ class SignupActivity : AppCompatActivity() {
     private fun addUserToDatabase(name: String, birth: String, email: String, uid: String) {
         val user = User(name, birth, email, uid)
         database.child("user").child(uid).setValue(user)
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                // 성공적으로 데이터가 추가됨
-                val documentId = documentReference.id
-                println("DocumentSnapshot added with ID: $documentId")
+        db.collection("users").document(uid).set(user)
+            .addOnSuccessListener {
             }
             .addOnFailureListener { e ->
                 // 데이터 추가 실패

@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+//        initList()
     }
 
     @SuppressLint("NotifyDataSetChanged", "ResourceAsColor")
@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         initList()
         initPostRecyclerView()
-
         binding.allPost.setOnClickListener(){
             binding.allPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             binding.allPost.setBackgroundResource(R.drawable.item_bg_on)
