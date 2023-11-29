@@ -73,8 +73,9 @@ class HomeFragment : Fragment() {
         binding.postRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun initList(){ //임의로 데이터 넣어서 만들어봄
+    private fun initList(){
         homeViewModel.updatePostList()
+//        homeViewModel.updateIsSalePostList(false)
     }
 
 }
