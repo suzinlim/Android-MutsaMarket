@@ -31,6 +31,7 @@ class ChatRoomActivity : AppCompatActivity() {
         // "roomId"는 ChattingFragment에서 전달한 채팅방의 고유 ID입니다.
         val chatRoomId = intent.getStringExtra("chatRoomId") ?: ""
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        val senderId = intent.getStringExtra("senderId")?: ""
 
 
         messageAdapter = MessageAdapter(emptyList(),currentUserId)
@@ -38,7 +39,7 @@ class ChatRoomActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // 채팅 메시지 불러오기
-        loadMessages(chatRoomId)
+        loadMessages(chatRoomId,senderId)
 
         // 메시지 전송 버튼 클릭 이벤트 처리
         findViewById<View>(R.id.btn).setOnClickListener {
@@ -51,10 +52,11 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
 
-    private fun loadMessages(chatRoomId: String) {
+    private fun loadMessages(chatRoomId: String, senderId: String) {
         firestore.collection("ChatRooms")
             .document(chatRoomId)
             .collection("Messages")
+            //.whereEqualTo("senderId", senderId)
             .orderBy("timestamp")
             .get()
             .addOnSuccessListener { result ->
@@ -64,9 +66,8 @@ class ChatRoomActivity : AppCompatActivity() {
                     val senderId = document.getString("senderId") ?: ""
                     val content = document.getString("content") ?: ""
                     val timestamp = document.getLong("timestamp") ?: 0
-                    //val chatRoomId = document.getString("chatRoomId") ?: ""
 
-                    val message = Message(senderId, content, timestamp,document.id)
+                    val message = Message(senderId, content, timestamp, document.id)
                     messages.add(message)
                 }
 
@@ -75,7 +76,7 @@ class ChatRoomActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 // 실패 처리
-                Log.e("ChatRoomActivity", "Error loading messages", exception)
+                Log.e("ChatRoomActivity", "메시지 로드 중 오류", exception)
             }
     }
 
