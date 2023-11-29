@@ -9,5 +9,8 @@ data class Post(
     val writer: String,
     val content: String,
     val isSale: Boolean,
-    val postID: String
-): Serializable
+    val postID: String,
+    val writerName : String
+): Serializable{
+    constructor() : this("", "", "", "", "", false, "", "")
+}

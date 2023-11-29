@@ -13,7 +13,6 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
 
     var dataList = mutableListOf<Post>()
     val db = FirebaseFirestore.getInstance()
-    var userName: String = "Annonymous User"
     interface OnItemClickListener {
         fun onItemClick(post: Post)
     }
@@ -30,19 +29,7 @@ class PostRecyclerViewAdapter: RecyclerView.Adapter<PostRecyclerViewAdapter.Post
            if(post.isSale){ binding.itemPostIsSale.text = "판매 중"}
            else{ binding.itemPostIsSale.text = "판매 완료"}
 
-           db.collection("users")
-               .whereEqualTo("uid", post.writer)
-               .get()
-               .addOnSuccessListener { querySnapshot ->
-                   for (document in querySnapshot.documents) {
-                       // 문서에서 데이터를 가져오기
-                       userName = document.getString("name").toString()
-                   }
-               }
-               .addOnFailureListener { e ->
-                   Log.d("firebaseLog","Error getting documents: $e")
-               }
-           binding.itemPostWriter.text = userName
+           binding.itemPostWriter.text = post.writerName
 //           val contentUri = Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000000033/ORIGINAL/NONE/image%2Fjpeg/2129791021")
 //           binding.itemPostImage.setImageURI(contentUri)
            binding.root.setOnClickListener {
