@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
     private fun initPostRecyclerView(){
-        adapter = PostRecyclerViewAdapter()
+        adapter = PostRecyclerViewAdapter(requireContext())
         adapter.dataList = postList
         binding.postRecyclerView.adapter = adapter
         binding.postRecyclerView.layoutManager = LinearLayoutManager(requireContext())

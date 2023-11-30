@@ -3,6 +3,7 @@ package hansung.ac.mutsamarket.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,18 +13,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import hansung.ac.mutsamarket.ChatRoomActivity
 import hansung.ac.mutsamarket.R
 import hansung.ac.mutsamarket.databinding.FragmentPostDetailBinding
 import hansung.ac.mutsamarket.vo.Post
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class PostDetailFragment: Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
     val db = FirebaseFirestore.getInstance()
+    private var downloadUri : String = ""
 
     private var _binding: FragmentPostDetailBinding? = null
     private val binding get() = _binding!!
@@ -102,10 +113,6 @@ class PostDetailFragment: Fragment() {
         }
     }
 
-
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -126,6 +133,19 @@ class PostDetailFragment: Fragment() {
             binding.modifyButton.isVisible= false
         }
 
+
+        // 이미지
+        if(post.image != ""){
+            CoroutineScope(Dispatchers.Main).launch {
+                downloadImage(post.image)
+                Log.d("image",downloadUri)
+                val imageUri = Uri.parse(downloadUri)
+                Glide.with(requireContext())
+                    .load(imageUri)
+                    .into(binding.imageView2)
+//                                    binding.imageView.setImageURI(imageUri)
+            }
+        }
 
         // 작성자 이름
         val writerTextView = binding.writerText
@@ -154,5 +174,27 @@ class PostDetailFragment: Fragment() {
         // 내용
         val contentTextView = binding.contentText
         contentTextView.text = post.content
+    }
+    private suspend fun downloadImage(imageName: String): String = withContext(Dispatchers.IO) {
+        return@withContext suspendCoroutine { continuation ->
+            // Firebase Storage 레퍼런스 생성
+            val storageReference = FirebaseStorage.getInstance().reference
+            val imagesRef = storageReference.child("images") // "images"는 업로드될 폴더 이름
+            // 다운로드할 이미지 파일의 이름으로 StorageReference 생성
+            val imageRef = imagesRef.child(imageName)
+
+            // 이미지 다운로드
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                downloadUri = uri.toString()
+                Log.d("image-download", downloadUri)
+                // TODO: 이미지 다운로드 성공 시의 처리
+                // downloadUrl을 사용하여 이미지를 표시하거나 필요한 작업을 수행합니다.
+                continuation.resume(downloadUri)
+            }.addOnFailureListener { exception ->
+                // 이미지 다운로드 실패 시의 처리
+                // exception을 사용하여 실패 이유를 확인할 수 있습니다.
+                continuation.resumeWithException(exception)
+            }
+        }
     }
 }
