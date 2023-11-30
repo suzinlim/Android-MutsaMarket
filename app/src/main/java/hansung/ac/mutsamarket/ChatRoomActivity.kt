@@ -53,6 +53,8 @@ class ChatRoomActivity : AppCompatActivity() {
 
 
     private fun loadMessages(chatRoomId: String, senderId: String) {
+        Log.d("ChatRoomActivity", "loadMessages - chatRoomId: $chatRoomId")  // 로그 찍어보기
+
         firestore.collection("ChatRooms")
             .document(chatRoomId)
             .collection("Messages")

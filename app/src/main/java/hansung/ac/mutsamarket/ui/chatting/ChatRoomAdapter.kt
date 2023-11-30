@@ -18,8 +18,11 @@ class ChatRoomAdapter(private var chatRooms: List<ChatRoom>) :
 
         init {
             itemView.setOnClickListener {
-                Log.d("ChatRoomAdapter", "포지션 $adapterPosition 에서 아이템이 클릭되었습니다.")
-                onItemClickListener?.invoke(chatRooms[adapterPosition])
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    Log.d("ChatRoomAdapter", "포지션 $position 에서 아이템이 클릭되었습니다.")
+                    onItemClickListener?.invoke(chatRooms[position])
+                }
             }
         }
     }
