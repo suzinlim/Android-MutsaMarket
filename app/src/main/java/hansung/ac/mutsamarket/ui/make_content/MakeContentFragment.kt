@@ -16,6 +16,7 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import hansung.ac.mutsamarket.R
@@ -25,9 +26,13 @@ import hansung.ac.mutsamarket.vo.User
 import java.util.*
 // Firebase Storage 라이브러리 import
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class MakeContentFragment : Fragment() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -93,10 +98,18 @@ class MakeContentFragment : Fragment() {
                             Log.d("postInfo-out", post.content.toString())
                         }
                         post?.let {
-                            downloadImage(post.image)
-                            Log.d("image",downloadUri)
-                            val imageUri = Uri.parse(downloadUri)
-                            binding.imageView.setImageURI(imageUri)
+                            if(post.image != ""){
+//                                downloadImage(post.image)
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    downloadImage(post.image)
+                                    Log.d("image",downloadUri)
+                                    val imageUri = Uri.parse(downloadUri)
+                                    Glide.with(requireContext())
+                                        .load(imageUri)
+                                        .into(binding.imageView)
+//                                    binding.imageView.setImageURI(imageUri)
+                                }
+                            }
                             titleEditText.setText(it.title)
                             priceEditText.setText(it.price)
                             contentEditText.setText(it.content)
@@ -249,22 +262,26 @@ class MakeContentFragment : Fragment() {
         }
         return imageName
     }
-    private fun downloadImage(imageName: String){
-        // Firebase Storage 레퍼런스 생성
-        val storageReference = FirebaseStorage.getInstance().reference
-        val imagesRef = storageReference.child("images") // "images"는 업로드될 폴더 이름
-        // 다운로드할 이미지 파일의 이름으로 StorageReference 생성
-        val imageRef = imagesRef.child(imageName)
+    private suspend fun downloadImage(imageName: String): String = withContext(Dispatchers.IO) {
+        return@withContext suspendCoroutine { continuation ->
+            // Firebase Storage 레퍼런스 생성
+            val storageReference = FirebaseStorage.getInstance().reference
+            val imagesRef = storageReference.child("images") // "images"는 업로드될 폴더 이름
+            // 다운로드할 이미지 파일의 이름으로 StorageReference 생성
+            val imageRef = imagesRef.child(imageName)
 
-        // 이미지 다운로드
-        imageRef.downloadUrl.addOnSuccessListener { uri ->
-            downloadUri = uri.toString()
-            Log.d("image-download", downloadUri)
-            // TODO: 이미지 다운로드 성공 시의 처리
-            // downloadUrl을 사용하여 이미지를 표시하거나 필요한 작업을 수행합니다. )
-        }.addOnFailureListener { exception ->
-            // 이미지 다운로드 실패 시의 처리
-            // exception을 사용하여 실패 이유를 확인할 수 있습니다.
+            // 이미지 다운로드
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                downloadUri = uri.toString()
+                Log.d("image-download", downloadUri)
+                // TODO: 이미지 다운로드 성공 시의 처리
+                // downloadUrl을 사용하여 이미지를 표시하거나 필요한 작업을 수행합니다.
+                continuation.resume(downloadUri)
+            }.addOnFailureListener { exception ->
+                // 이미지 다운로드 실패 시의 처리
+                // exception을 사용하여 실패 이유를 확인할 수 있습니다.
+                continuation.resumeWithException(exception)
+            }
         }
     }
 }
