@@ -67,9 +67,24 @@
 
 ## 4. 판매자와 구매자 간의 채팅
 
+### 메세지 보내기
 <p float="left">
+  <img width="346" alt="image" src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/95863810/7ee17341-9d63-4753-b504-790df58fcd8a">
+   <img width="346" alt="image" src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/95863810/7a089a07-c2b1-455e-b0d2-f635ecd43431">
+</p>  
 </p>
 
+* 게시글 상세보기 페이지의 채팅하기 버튼을 통해 사용자와의 채팅을 시작할 수 있습니다.
+* 채팅하기 버튼 클릭시 다음과 같은 채팅화면으로 전환되며 전송버튼을 통해 채팅을 보낼 수 있습니다.
+
+### 메세지 받기
+<p float="left">
+  // 채팅리스트 사진
+  // 메세지 받는 사람의 채팅방 사진 (주고받는 모습)
+</p>
+
+* 사용자는 나에게 온 채팅들을 확인할 수 있습니다.
+* 상대에게 받은 메세지는 왼쪽, 내 메세지는 오른쪽에 보이게 되며 상대방과 채팅을 주고 받을 수 있습니다.
 <br><br>
 
 ## 주요 기술
