@@ -110,10 +110,14 @@ class MakeContentFragment : Fragment() {
 //                                    binding.imageView.setImageURI(imageUri)
                                 }
                             }
+                            val sale = document.getBoolean("sale")
+                            Log.d("sale", sale.toString())
                             titleEditText.setText(it.title)
                             priceEditText.setText(it.price)
                             contentEditText.setText(it.content)
-                            sellSwitch.isChecked = it.isSale
+                            if (sale != null) {
+                                sellSwitch.isChecked = sale
+                            }
                             writeButton.setOnClickListener {
                                 val updatedTitle = titleEditText.text.toString()
                                 val updatedPrice = priceEditText.text.toString()
