@@ -13,7 +13,7 @@
 <table>
   <tr> 
     <td><a href="https://github.com/gesal03"><img src="https://github.com/MutsaMarket/MutsaMarket-apk/assets/77336664/c4c89e9b-d53f-4f77-9817-ce1139d405a7" style="width:100%;"></a></td>
-    <td><a href="https://github.com/beomtae"><img src="" style="width:100%;"></a></td>
+    <td><a href="https://github.com/beomtae"><img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/89a73b69-e889-4e04-842d-aca97c554371" style="width:100%;"></a></td>
     <td><a href="https://github.com/suzinlim"><img src="https://github.com/MutsaMarket/MutsaMarket-apk/assets/77336664/b533419f-6439-466d-a2f3-9eccd4c5bdc5" style="width:100%;"></a></td>
     <td><a href="https://github.com/sengooooo"><img src="https://github.com/MutsaMarket/MutsaMarket-apk/assets/77336664/67df1c19-c0e0-490a-afa8-b8cf97e9bc40" style="width:100%;"></a></td>
     
