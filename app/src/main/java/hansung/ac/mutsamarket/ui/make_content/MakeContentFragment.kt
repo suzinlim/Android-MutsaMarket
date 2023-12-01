@@ -244,7 +244,7 @@ class MakeContentFragment : Fragment() {
                             username=user.name
                             if (title.isNotEmpty() && price.isNotEmpty() && content.isNotEmpty()) {
                                 if (isImageSelected && selectedImageUri != null) {
-                                    uploadImage(){uploadedImageName ->
+                                    uploadImage() { uploadedImageName ->
                                         imageName = uploadedImageName
                                         // 이미지 업로드가 성공했을 경우에만 글을 포스트 하도록 수정
 
@@ -274,13 +274,27 @@ class MakeContentFragment : Fragment() {
                                             }
                                             .addOnFailureListener { e ->
                                                 Log.d("MakeContent", "Check #5-2 : error")
-                                                Toast.makeText(requireContext(), "글 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "글 작성에 실패했습니다.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
                                     }
                                     Log.d("MakeContent", "Check #2-1 : ${imageName}")
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "사진을 첨부해주세요.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             } else {
-                                Toast.makeText(requireContext(), "모든 항목을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                requireContext(),
+                                "모든 항목을 입력하세요.",
+                                Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
