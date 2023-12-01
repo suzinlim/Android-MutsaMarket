@@ -30,7 +30,7 @@
                 android:id="@+id/myName"
                 android:layout_width="wrap_content"
                 android:layout_height="54dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="0dp"
                 android:text=""
                 android:textColor="@color/white"
@@ -41,12 +41,14 @@
             <TextView
                 android:id="@+id/welcomeText"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="2"
                 android:text="@string/welcome_comment"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:gravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
