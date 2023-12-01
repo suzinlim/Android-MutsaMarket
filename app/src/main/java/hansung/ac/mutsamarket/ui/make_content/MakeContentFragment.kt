@@ -125,10 +125,13 @@ class MakeContentFragment : Fragment() {
                             }
 
                             // 이미 작성된 게시글 정보를 얻어온다.(이름,가격,설명,등..)
+                            val sale = document.getBoolean("sale")
                             titleEditText.setText(it.title)
                             priceEditText.setText(it.price)
                             contentEditText.setText(it.content)
-                            sellSwitch.isChecked = it.isSale
+                            if(sale!=null){
+                                sellSwitch.isChecked=sale
+                            }
 
                             // 만약 사용자가 수정하기 버튼을 누른다면,
                             writeButton.setOnClickListener {
