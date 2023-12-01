@@ -98,6 +98,7 @@
 
 ## 4. 판매자와 구매자 간의 채팅
 
+### 메세지 보내기
 <p float="left">
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/366a21df-6201-4008-996e-64699ddb1643" width="300" />
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/4ecff8b9-5086-4107-ac30-6566e76f6cbf" width="300" />
@@ -106,6 +107,7 @@
 * 게시글 상세보기 페이지의 `채팅하기` 버튼을 통해 사용자와의 채팅을 시작할 수 있습니다.
 * `채팅하기` 버튼 클릭시 다음과 같은 채팅화면으로 전환되며 전송버튼을 통해 채팅을 보낼 수 있습니다.
 
+### 메세지 받기
 <p float="left">
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/599dd3b3-b8f9-42b1-90c1-70178f64c761" width="300" />
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/3caa9e7f-2d24-4373-bf60-8f5c05f6d4c4" width="300" />
