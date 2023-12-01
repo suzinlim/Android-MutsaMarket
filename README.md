@@ -84,9 +84,9 @@
 ## 3. 판매 글 목록
 
 <p float="left">
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/a0ade5c8-fe8f-4f05-a072-145cf138378a" width="300" />
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/73924e67-e10e-4f2b-8916-ae3b8d275b78" width="300" />
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/f9bc245b-b571-41bc-8df1-9aef9e274a82" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/a0ade5c8-fe8f-4f05-a072-145cf138378a" width="250" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/73924e67-e10e-4f2b-8916-ae3b8d275b78" width="250" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/f9bc245b-b571-41bc-8df1-9aef9e274a82" width="250" />
 </p>
 
 * `전체`, `판매 중`, `판매 완료`로 나누어 판매 글 목록을 확인할 수 있습니다.
