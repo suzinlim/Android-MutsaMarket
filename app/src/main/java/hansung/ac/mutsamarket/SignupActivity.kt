@@ -79,6 +79,11 @@ class SignupActivity : AppCompatActivity() {
             val password = binding.password.text.toString().trim()
             val checkPassword = binding.checkPassword.text.toString().trim()
 
+            if (name.isEmpty() || birth.isEmpty() || email.isEmpty() || password.isEmpty() || checkPassword.isEmpty()) {
+                Toast.makeText(this, "회원 정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // 회원가입 함수 호출하지 않음
+            }
+
             // 비밀번호 조건에 맞지 않을 경우
             if (password.length < 6 || password.length > 15 || !password.matches(Regex(".*[a-zA-Z].*"))) {
                 Toast.makeText(this, "비밀번호는 6~15자의 영문 조합이어야 합니다.", Toast.LENGTH_SHORT).show()
