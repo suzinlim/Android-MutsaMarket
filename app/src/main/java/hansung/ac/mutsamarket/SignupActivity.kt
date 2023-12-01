@@ -106,7 +106,7 @@ class SignupActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // 회원가입 성공할 경우
                     Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                    val intent: Intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                    val intent: Intent = Intent(this@SignupActivity, MainActivity::class.java)
                     startActivity(intent)
                     addUserToDatabase(name, birth, email, auth.currentUser?.uid!!)
                 } else {
