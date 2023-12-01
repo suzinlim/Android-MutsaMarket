@@ -44,11 +44,11 @@ class PostRecyclerViewAdapter(private val requireContext: Context) : RecyclerVie
            // 이미지
            if(post.image != ""){
                CoroutineScope(Dispatchers.Main).launch {
-                   downloadImage(post.image)
-                   Log.d("image",downloadUri)
-                   val imageUri = Uri.parse(downloadUri)
+                   val downloadImage = downloadImage(post.image)
+//                   Log.d("image",downloadUri)
+//                   val imageUri = Uri.parse(downloadUri)
                    Glide.with(requireContext)
-                       .load(imageUri)
+                       .load(downloadImage)
                        .into(binding.itemPostImage)
 //                                    binding.imageView.setImageURI(imageUri)
                }
@@ -76,7 +76,7 @@ class PostRecyclerViewAdapter(private val requireContext: Context) : RecyclerVie
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(dataList[position])
     }
-    private suspend fun downloadImage(imageName: String): String = withContext(Dispatchers.IO) {
+    private suspend fun downloadImage(imageName: String): Uri = withContext(Dispatchers.IO) {
         return@withContext suspendCoroutine { continuation ->
             // Firebase Storage 레퍼런스 생성
             val storageReference = FirebaseStorage.getInstance().reference
@@ -86,11 +86,11 @@ class PostRecyclerViewAdapter(private val requireContext: Context) : RecyclerVie
 
             // 이미지 다운로드
             imageRef.downloadUrl.addOnSuccessListener { uri ->
-                downloadUri = uri.toString()
-                Log.d("image-download", downloadUri)
+//                val downloadUri2 = uri.toString()
+                Log.d("image-download", uri.toString())
                 // TODO: 이미지 다운로드 성공 시의 처리
                 // downloadUrl을 사용하여 이미지를 표시하거나 필요한 작업을 수행합니다.
-                continuation.resume(downloadUri)
+                continuation.resume(uri)
             }.addOnFailureListener { exception ->
                 // 이미지 다운로드 실패 시의 처리
                 // exception을 사용하여 실패 이유를 확인할 수 있습니다.
