@@ -59,7 +59,7 @@
 
 <br><br>
 
-## 2. 판매 글 등록 / 수정 / 삭제
+## 2. 판매 글 등록 / 수정
 
 <p float="left">
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/1b153898-d832-4d99-9e31-40943f9f5768" width="300" />
