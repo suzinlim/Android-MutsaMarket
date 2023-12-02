@@ -31,18 +31,18 @@
 ## 1. 회원가입 & 로그인
 ### 1) 회원가입
 <p float="left">
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/d4c28184-7e23-444d-be73-51a1875a53ed" width="300" />
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/8e20633b-8a28-403d-a18f-0b325a5a485b" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/65b861b7-b67a-4be1-bc4d-8ed97ce8582b" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/a32a7c4d-db71-4eb8-89da-7492fcf97fac" width="300" />
 </p>
 
 * 이름, 생년월일, 이메일, 비밀번호를 입력하여 회원가입을 합니다.
 * 이메일을 입력할 때는 <strong>이메일 형식</strong>에 맞추어 입력해주어야 하고, <strong>이메일 중복 확인 검사</strong>가 필요합니다.
-* 비밀번호는 <strong>6~15자리 이상의 영문 조합</strong>으로 입력해야 합니다.
+* 비밀번호는 <strong>6~15자리 사이의 영문</strong>으로 입력해야 합니다.
 
 ### 2) 로그인
 <p float="left">
   <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/50ef8dc3-0dcc-4b4f-bde1-607aa1a42c9c" width="300" />
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/e8b9fd42-b290-48de-b20f-789a9e776759" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/a78f8506-429e-4cfb-a469-26b3c5aa67f0" width="300" />
 </p>
 
 * 회원가입 시 입력한 이메일과 비밀번호로 로그인할 수 있습니다.
@@ -50,11 +50,12 @@
 
 ### 3) 마이페이지
 <p float="left">
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/a73f01a6-76b9-4e9e-9c1f-6fb184b69b2b" width="300" />
-  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/8b1c6d0a-296f-44b7-a00b-722b101714b0" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/f461d3ee-41c0-489f-afb7-82b1e2987563" width="300" />
+  <img src="https://github.com/MutsaMarket/Android-MutsaMarket/assets/122861956/65ed11f9-7a30-4654-a341-9b92ec1509bd" width="300" />
 </p>
 
 * 사용자의 정보는 마이페이지에서 확인할 수 있습니다.
+* `로그아웃` 버튼을 누르면 로그아웃 처리가 됩니다.
 * 회원 탈퇴를 하고 싶다면 `회원 탈퇴` 버튼을 눌러 "회원 탈퇴"를 입력하면 사용자 탈퇴 처리가 됩니다.
 
 <br><br>
@@ -67,7 +68,7 @@
 </p>
 
 * 사용자는 판매할 상품의 이미지, 상품 이름, 판매 가격, 상품 설명을 입력한 후, `등록하기` 버튼을 눌러 등록할 수 있습니다.
-* `상품 이미지를 반드시 첨부`하여야 합니다.
+* <strong>상품 이미지를 반드시 첨부</strong>하여야 글을 등록할 수 있습니다.
 * 처음 판매 글을 등록하게 되면 판매 상태가 활성화되어 있으며, 사용자는 `수정하기`를 통해 판매 상태를 비활성화시킬 수 있습니다.
 
 <p float="left">
