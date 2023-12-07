@@ -17,7 +17,7 @@
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
     <string name="password2">비밀번호 확인</string>
-    <string name="pw_check_text">6~15자 이상의 영문/숫자 조합으로 입력해주세요.</string>
+    <string name="pw_check_text">6~15자 사이의 비밀번호를 입력해주세요.</string>
     <string name="login_first_comment">처음이신가요?</string>
     <string name="sign_up">회원가입</string>
     <string name="welcome_comment">님, 안녕하세요!</string>
